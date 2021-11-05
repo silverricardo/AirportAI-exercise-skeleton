@@ -4,7 +4,7 @@
 'use strict';
 
 let mongoose = require('mongoose');
-const DATABASE_URL = 'mongodb://localhost:27017/AirportAI';
+const DATABASE_URL = 'mongodb://127.0.0.1:27017/AirportAI';
 
 
 module.exports = setup;
@@ -52,19 +52,23 @@ function connectToDb() {
   // Use native promises.
   mongoose.Promise = global.Promise;
 
-  // Connect and return promise.
-  return mongoose.connect(DATABASE_URL, {
+  // Mongoose connection options.
+  const mongoConnectOpts = {
+    sslValidate: true,
+    checkServerIdentity: true,
+    useFindAndModify: false,
     useCreateIndex: true,
     useNewUrlParser: true,
-    reconnectTries: 100,
-    reconnectInterval: 500,
-    keepAlive: 300000,
-    connectTimeoutMS: 30000,
-    ha: true,
-    haInterval: 10000,
     useUnifiedTopology: true,
-    useFindAndModify: false
-  }).catch(function(err) {
+    keepAlive: 300000,
+    connectTimeoutMS: 5000,
+    serverSelectionTimeoutMS: 5000,
+    ha: true, // Make sure the high availability checks are on
+    haInterval: 10000, // Run every 10 seconds
+  };
+
+  // Connect and return promise.
+  return mongoose.connect(DATABASE_URL, mongoConnectOpts).catch(function(err) {
     // To avoid promise not handled exception.
     console.error('Unable to connect MongoDB. If problem persists, please restart the server. Error: ' + err);
   });
