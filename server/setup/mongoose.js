@@ -60,7 +60,6 @@ function connectToDb() {
     useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    keepAlive: 300000,
     connectTimeoutMS: 5000,
     serverSelectionTimeoutMS: 5000,
     ha: true, // Make sure the high availability checks are on
