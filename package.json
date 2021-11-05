@@ -7,23 +7,20 @@
     "test-win": "set NODE_ENV=test&& mocha --recursive --inspect --exit test"
   },
   "dependencies": {
-    "body-parser": "1.19.0",
     "express": "4.17.1",
-    "helmet": "3.21.2",
-    "lodash": "4.17.19",
+    "helmet": "4.5.0",
+    "lodash": "4.17.21",
     "method-override": "3.0.0",
-    "moment": "2.24.0",
-    "moment-timezone": "0.5.27",
-    "mongodb": "3.3.3",
-    "mongoose": "5.7.9",
-    "request": "2.88.0",
-    "request-promise": "4.2.5"
+    "moment": "2.29.1",
+    "moment-timezone": "0.5.33",
+    "mongoose": "5.13.13",
+    "request": "2.88.2",
+    "request-promise": "4.2.6"
   },
   "devDependencies": {
     "chai": "^4.1.2",
-    "eslint": "^5.13.0",
-    "mocha": "^7.1.2",
-    "sinon": "^4.4.8",
-    "supertest": "^3.0.0"
+    "eslint": "7.24.0",
+    "mocha": "8.3.2",
+    "sinon": "10.0.1"
   }
 }
