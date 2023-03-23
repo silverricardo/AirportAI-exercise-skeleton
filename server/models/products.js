@@ -31,7 +31,20 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             try {
 
-                let productsFound = Product.find();
+                let productsFound = await Product.find();
+                resolve(productsFound);
+
+            } catch (error) {
+                reject(error);
+            }
+        })
+    },
+    createProduct: (req) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+
+                let user = new Product(req.body);
+                user.save()
                 resolve(productsFound);
 
             } catch (error) {

@@ -5,7 +5,13 @@ let ErrorHandler = require('../controllers/errorHandler');
 
 router.get('/api/public/', async (req, res) => {
     try {
-        let response = Products.getAllProducts();
+
+        let search = req.require.search;
+
+        let response;
+        if (!search)
+            response = await Products.getAllProducts();
+
         return res.status(200).send(response);
     } catch (error) {
         ErrorHandler.ErrorHandler(error, res)
@@ -14,12 +20,27 @@ router.get('/api/public/', async (req, res) => {
 
 router.get('/api/private/', async (req, res) => {
     try {
-        let response = Products.getAllProducts();
+        let search = req.require.search;
+
+        let response;
+        if (!search)
+            response = await Products.getAllProducts();
+
         return res.status(200).send(response);
     } catch (error) {
         ErrorHandler.ErrorHandler(error, res)
     }
 });
 
+router.post('/api/private/', async (req, res) => {
+    try {
+  
+           let response = await Products.createProduct(req);
+
+        return res.status(200).send(response);
+    } catch (error) {
+        ErrorHandler.ErrorHandler(error, res)
+    }
+});
 
 module.exports = router;

@@ -6,6 +6,7 @@
 let helmet = require('helmet');
 let methodOverride = require('method-override');
 let express = require('express');
+let Validations = require('../controllers/validations')
 
 module.exports = setup;
 
@@ -19,6 +20,7 @@ function setup(app) {
   app.use(methodOverride());
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
+  app.use(Validations.hasValidApiKey);
 
   return app;
 };
