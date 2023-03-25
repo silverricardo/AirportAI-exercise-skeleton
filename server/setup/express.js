@@ -21,6 +21,7 @@ function setup(app) {
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
   app.use(Validations.hasValidApiKey);
+  app.use('/api/private/', Validations.isAuthenticated);
 
   return app;
 };

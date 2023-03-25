@@ -1,41 +1,45 @@
 let express = require('express');
 let router = express.Router();
-let Products = require('../models/products');
+let Products = require('../controllers/products');
 let ErrorHandler = require('../controllers/errorHandler');
 
-router.get('/api/public/', async (req, res) => {
+router.get('/api/public/products', async (req, res) => {
     try {
 
-        let search = req.require.search;
-
-        let response;
-        if (!search)
-            response = await Products.getAllProducts();
-
+        let response = await Products.getAllProducts(req);
         return res.status(200).send(response);
+
     } catch (error) {
         ErrorHandler.ErrorHandler(error, res)
     }
 });
 
-router.get('/api/private/', async (req, res) => {
+router.get('/api/private/products', async (req, res) => {
     try {
-        let search = req.require.search;
 
-        let response;
-        if (!search)
-            response = await Products.getAllProducts();
-
+        let response = await Products.getAllProducts(req);
         return res.status(200).send(response);
+
     } catch (error) {
         ErrorHandler.ErrorHandler(error, res)
     }
 });
 
-router.post('/api/private/', async (req, res) => {
+router.post('/api/private/products', async (req, res) => {
     try {
-  
-           let response = await Products.createProduct(req);
+
+        let response = await Products.createProduct(req);
+
+        return res.status(201).send(response);
+    } catch (error) {
+        ErrorHandler.ErrorHandler(error, res)
+    }
+});
+
+router.delete('/api/private/products', async (req, res) => {
+    try {
+
+        let response = await Products.deleteProduct(req);
 
         return res.status(200).send(response);
     } catch (error) {

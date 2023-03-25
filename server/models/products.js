@@ -1,9 +1,10 @@
-const { Schema } = require('mongoose');
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
 const productsModel = new Schema(
     {
-        _id: { type: String, index: true },
-        typeOdProduct: {
+        id: { type: String, index: true },
+        typeOfProduct: {
             type: String,
             require: true
         },
@@ -24,32 +25,6 @@ const productsModel = new Schema(
     }
 )
 
+productsModel.index({ "typeOfProduct": "text", "brand": "text", "model": "text", "color": "text" })
+
 const Product = module.exports = mongoose.model('Product', productsModel);
-
-module.exports = {
-    getAllProducts: () => {
-        return new Promise(async (resolve, reject) => {
-            try {
-
-                let productsFound = await Product.find();
-                resolve(productsFound);
-
-            } catch (error) {
-                reject(error);
-            }
-        })
-    },
-    createProduct: (req) => {
-        return new Promise(async (resolve, reject) => {
-            try {
-
-                let user = new Product(req.body);
-                user.save()
-                resolve(productsFound);
-
-            } catch (error) {
-                reject(error);
-            }
-        })
-    }
-}

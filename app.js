@@ -16,6 +16,7 @@ require('./server/setup/mongoose')();
 // Set up routes.
 app.use('/', require('./server/routes'));
 app.use(require('./server/routes/users'));
+app.use(require('./server/routes/products'));
 
 // Start app.
 app.listen(PORT, function () {

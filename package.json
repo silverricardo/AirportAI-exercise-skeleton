@@ -9,6 +9,7 @@
     "dev": "nodemon app.js"
   },
   "dependencies": {
+    "crypto": "^1.0.1",
     "dotenv": "^16.0.3",
     "express": "^4.17.3",
     "helmet": "4.5.0",
@@ -17,18 +18,18 @@
     "method-override": "3.0.0",
     "moment": "2.29.4",
     "moment-timezone": "0.5.35",
-    "mongoose": "5.13.13",
+    "mongoose": "^5.13.13",
     "request": "2.88.2",
     "request-promise": "4.2.6"
   },
   "devDependencies": {
     "chai": "^4.3.7",
-    "chai-http": "^4.3.0",
     "eslint": "^8.36.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.27.5",
     "mocha": "10.0.0",
     "nodemon": "^2.0.22",
-    "sinon": "10.0.1"
+    "sinon": "10.0.1",
+    "supertest": "^6.3.3"
   }
 }
