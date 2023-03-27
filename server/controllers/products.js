@@ -10,20 +10,32 @@ module.exports = {
                 if (Object.keys(search).length === 0) {
                     let productsFound = await Products.find();
                     resolve(productsFound);
-                } else if (Object.keys(search).length === 2) {
+                } else {
                     if (!search.lostTime) {
                         reject({ status: 400, message: "Lost time is required!" })
                     }
-                    
+
                     let query = {
-                        createdAt: { $gte: search.lostTime },
-                        $text: { $search: search.freeSearch } 
+                        createdAt: { $gte: search.lostTime }
+                    };
+
+                    if (search.freeSearch) {
+                        query.$text = { $search: search.freeSearch };
+                        let productsFound = await Products.find(query);
+                        resolve(productsFound);
+                    } else {
+                        let valid = await Validate.validateSearch(search);
+                        if (valid) {
+                            query.typeOfProduct = search.typeOfProduct
+                            query.brand = search.brand
+                            query.color = search.color
+                            if (search.model) {
+                                query.model = search.model
+                            }
+                            let productsFound = await Products.find(query);
+                            resolve(productsFound);
+                        }
                     }
-                    let productsFound = await Products.find(query);
-                    resolve(productsFound);
-
-                } else {
-
                 }
 
             } catch (error) {
@@ -41,27 +53,6 @@ module.exports = {
                     let product = new Products(req.body);
                     product.save()
                     resolve(product);
-                }
-
-            } catch (error) {
-                reject(error);
-            }
-        })
-    },
-    searchProducts: (req) => {
-        return new Promise(async (resolve, reject) => {
-            try {
-
-                let recived = req.query;
-                let productsFound;
-                if (!recived) {
-                    productsFound = await Products.find();
-                    resolve(productsFound);
-                } else {
-
-                    let valid = await Validate.validateSearch(recived)
-                    productsFound = await Products.find(recived);
-                    resolve(productsFound);
                 }
 
             } catch (error) {

@@ -37,11 +37,8 @@ module.exports = {
             if (!search.color) {
                 reject({ status: 400, message: "Color required!" })
             }
-            if(!search.lostTime) {
-                reject({ status: 400, message: "Lost time is required!" })
-            }
             else {
-                resolve()
+                resolve(true)
             }
         })
     },
@@ -75,9 +72,9 @@ module.exports = {
             ErrorHandler.ErrorHandler(error, res)
         };
     },
-    validateProduct:(product)=>{
+    validateProduct: (product) => {
         return new Promise(async (resolve, reject) => {
-            if (Object.keys(product).length===0) {
+            if (Object.keys(product).length === 0) {
                 reject({ status: 400, message: "Product data is required!" })
             }
             if (!product.typeOfProduct) {

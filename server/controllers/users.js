@@ -2,7 +2,8 @@ let Users = require('../models/users')
 let jwt = require('jsonwebtoken');
 let crypto = require('crypto'),
     algorithm = 'aes-256-cbc',
-    password = 'lasersail2019!';
+    ENCRYPTION_KEY = '16808abdd2ec954b81e32dc466529ab5eed71a8b6d1ec922d4b9b2a891ef521b',
+    iv = '48773b638d83510e0a8e0bb45f4721bf';
 
 module.exports = {
     authenticateUser: (req) => {
@@ -93,12 +94,10 @@ async function createUserFirstTime() {
 function getEncriptedPassword(userPassword) {
     return new Promise((resolve) => {
         try {
-
-            let cipher = crypto.createCipher(algorithm, password);
-            let encriptedPassword = cipher.update(userPassword, 'utf8', 'hex');
-            encriptedPassword += cipher.final('hex');
-            resolve(encriptedPassword)
-
+            let cipher = crypto.createCipheriv(algorithm, Buffer.from(ENCRYPTION_KEY, 'hex'), Buffer.from(iv, 'hex'));
+            let encrypted = cipher.update(userPassword);
+            encrypted = Buffer.concat([encrypted, cipher.final()]);
+            resolve(encrypted.toString('hex'))
         } catch (error) {
             console.error(`Error - ${error}`)
         }

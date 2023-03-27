@@ -5,7 +5,7 @@ require('dotenv').config();
 'use strict';
 
 let app = require('express')();
-const PORT = 3300;
+const PORT = 3000;
 
 // Set up Express.
 require('./server/setup/express')(app);

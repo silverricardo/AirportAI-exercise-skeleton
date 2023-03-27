@@ -1,6 +1,6 @@
 require('dotenv').config();
 const superTest = require('supertest');
-const request = superTest('http://localhost:3300');
+const request = superTest('http://localhost:3000');
 const expect = require('chai').expect;
 var token;
 var refreshToken;
@@ -12,13 +12,27 @@ describe('/GET list products public', () => {
     })
 })
 
-describe('/GET Search products public', () => {
-    it('Search products public', async () => {
+describe('/GET Search products public free search', () => {
+    it('Search products public free search', async () => {
         const res = await request.get('/api/public/products')
             .set({ apikey: process.env.API_KEY, Accept: 'application/json' })
             .send({
                 "lostTime": "2023-03-25T14:37:11.081Z",
                 "freeSearch": "I lost my Samsung S4 phone"
+            })
+        expect(res.status).to.eql(200);
+    })
+})
+
+describe('/GET Search products public ', () => {
+    it('Search products public', async () => {
+        const res = await request.get('/api/public/products')
+            .set({ apikey: process.env.API_KEY, Accept: 'application/json' })
+            .send({
+                "lostTime": "2023-03-25T14:37:11.081Z",
+                "typeOfProduct": "Phone",
+                "brand": "Iphone",
+                "color": "Black"
             })
         expect(res.status).to.eql(200);
     })
@@ -84,15 +98,28 @@ describe('/POST Creat an product', () => {
     })
 })
 
-describe('/GET Search products as an agent', () => {
-    it('Search products as an agent', async () => {
+describe('/GET Search products as an agent free search', () => {
+    it('Search products as an agent free search', async () => {
         const res = await request.get('/api/private/products')
             .set({ apikey: process.env.API_KEY, Accept: 'application/json', token: token, refreshToken: refreshToken })
             .send({
                 "lostTime": "2023-03-25T14:37:11.081Z",
-                "freeSearch": "I lost my Samsung S4 phone"
+                "freeSearch": "I lost my Iphone Xs phone"
             })
         expect(res.status).to.eql(200);
+    })
+})
+
+describe('/GET Search products as an agent ', () => {
+    it('Search products as an agent', async () => {
+        const res = await request.get('/api/private/products')
+            .set({ apikey: process.env.API_KEY, Accept: 'application/json' })
+            .send({
+                "lostTime": "2023-03-25T14:37:11.081Z",
+                "typeOfProduct": "Phone",
+                "brand": "Iphone",
+            })
+        expect(res.status).to.eql(400);
     })
 })
 
